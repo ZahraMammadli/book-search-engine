@@ -1,9 +1,6 @@
-const typeDefs = gql`
-  type Query {
- 
-  }
- 
+const { gql } = require("apollo-server-express");
 
+const typeDefs = gql`
   type Mutation {
     addProfile(name: String!): Profile
     addSkill(profileId: ID!, skill: String!): Profile

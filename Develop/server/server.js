@@ -23,7 +23,7 @@ const init = async () => {
   await server.start();
   // apply server a middleware
   server.applyMiddleware({ app });
-  app.use(routes);
+  // app.use(routes);
   db.once("open", () => {
     app.listen(PORT, () =>
       console.log(`🌍 Now listening on localhost:${PORT}`)

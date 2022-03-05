@@ -18,14 +18,12 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 }
 
-// app.use(routes);
-
 const init = async () => {
   // start the apollo server
   await server.start();
   // apply server a middleware
   server.applyMiddleware({ app });
-
+  app.use(routes);
   db.once("open", () => {
     app.listen(PORT, () =>
       console.log(`🌍 Now listening on localhost:${PORT}`)

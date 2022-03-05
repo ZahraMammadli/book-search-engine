@@ -19,6 +19,7 @@ const resolvers = {
       }
       const correctPw = await user.isCorrectPassword(args.password);
 
+      // check if password is correct
       if (!correctPw) {
         return { message: "Wrong password!" };
       }

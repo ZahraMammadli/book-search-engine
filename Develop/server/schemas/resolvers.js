@@ -10,6 +10,7 @@ const resolvers = {
     },
   },
   Mutation: {
+    // Resovler to login user
     login: async (parent, args) => {
       const user = await User.findOne({
         $or: [{ username: args.username }, { email: args.email }],
@@ -30,6 +31,7 @@ const resolvers = {
       return { user, token };
     },
 
+    //  Resolver to add new User
     addUser: async (parent, args) => {
       const user = await User.create(args);
 
@@ -37,9 +39,13 @@ const resolvers = {
         return { message: "Something is wrong!" };
       }
 
-      // retrive token
       const token = signToken(user);
       return { user, token };
+    },
+
+    saveBook: async (parent, args) => {
+      console.log(args);
+      return { message: "in progress" };
     },
   },
 };

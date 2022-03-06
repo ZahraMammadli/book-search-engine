@@ -4,11 +4,9 @@
 
 The app was built using the MERN stack with a React front end, MongoDB database, Apollo server express and graphql. It allow users to save book searches to the back end.
 
-[Find Books Here!]()
+[Find Books Here!](https://thawing-reaches-13018.herokuapp.com/)
 
-# :user
-
-# :memo:Description
+# Description
 
     AS AN avid reader
     I WANT to search for new books to read

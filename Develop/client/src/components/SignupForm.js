@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
-
-import { ADD_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
+import { ADD_USER } from "../utils/mutations";
 import { useMutation } from "@apollo/react-hooks";
 
 const SignupForm = () => {
-  // set initial form state
   const [addUser] = useMutation(ADD_USER);
+  // set initial form state
   const [userFormData, setUserFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
-  // set state for form validation
+  //state for user validation
   const [validated] = useState(false);
-  // set state for alert
+  // state for alert
   const [showAlert, setShowAlert] = useState(false);
 
   const handleInputChange = (event) => {
@@ -34,18 +33,11 @@ const SignupForm = () => {
     }
 
     try {
-      const responce = await addUser({
+      const { data } = await addUser({
         variables: { ...userFormData },
       });
 
-      if (
-        !responce.data.ADD_USER?.token ||
-        responce.data.addUser.token === null
-      ) {
-        throw new Error("Something went wrong!");
-      }
-
-      Auth.login(responce.addUser.token);
+      Auth.login(data.addUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
@@ -95,6 +87,7 @@ const SignupForm = () => {
             name="email"
             onChange={handleInputChange}
             value={userFormData.email}
+            autoComplete="on"
             required
           />
           <Form.Control.Feedback type="invalid">
@@ -110,6 +103,7 @@ const SignupForm = () => {
             name="password"
             onChange={handleInputChange}
             value={userFormData.password}
+            autoComplete="on"
             required
           />
           <Form.Control.Feedback type="invalid">

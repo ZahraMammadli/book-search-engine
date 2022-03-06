@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import Auth from "../utils/auth";
-
 import { LOGIN_USER } from "../utils/mutations";
 import { useMutation } from "@apollo/react-hooks";
 
@@ -14,7 +13,10 @@ const LoginForm = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
+    setUserFormData({
+      ...userFormData,
+      [name]: value,
+    });
   };
 
   const handleFormSubmit = async (event) => {
@@ -64,6 +66,7 @@ const LoginForm = () => {
             name="email"
             onChange={handleInputChange}
             value={userFormData.email}
+            autoComplete="on"
             required
           />
           <Form.Control.Feedback type="invalid">
@@ -79,6 +82,7 @@ const LoginForm = () => {
             name="password"
             onChange={handleInputChange}
             value={userFormData.password}
+            autoComplete="on"
             required
           />
           <Form.Control.Feedback type="invalid">

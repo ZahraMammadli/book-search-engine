@@ -44,4 +44,4 @@ The app was built using the MERN stack with a React front end, MongoDB database,
 
 # Demo
 
-Please follow this link to view the [demo!](https://drive.google.com/drive/folders/1x5USdcQJtk1GzuCsMIA4qWmdEMVMQzw_?usp=sharing)
+Please follow this link to view the [demo!](https://drive.google.com/file/d/1vTCkVBa47N8VnWPn8XSLQa3cV1Yi4cZ_/view?usp=sharing)

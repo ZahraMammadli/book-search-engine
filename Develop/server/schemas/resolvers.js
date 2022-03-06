@@ -2,6 +2,7 @@
 const { User } = require("../models");
 // import token
 const { signToken } = require("../utils/auth");
+const { AuthenticationError } = require("apollo-server-express");
 
 const resolvers = {
   Query: {
@@ -53,16 +54,20 @@ const resolvers = {
 
     saveBook: async (parent, args, context) => {
       console.log(context.user);
-      try {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { savedBooks: { ...args.book } } },
-          { new: true, runValidators: true }
-        );
-        return updatedUser;
-      } catch (err) {
-        console.log(err);
-        return { message: "failed to save the book" };
+      if (!context.user) {
+        throw new AuthenticationError("You need to be logged in");
+      } else {
+        try {
+          const updatedUser = await User.findOneAndUpdate(
+            { _id: context.user._id },
+            { $addToSet: { savedBooks: { ...args.book } } },
+            { new: true, runValidators: true }
+          );
+          return updatedUser;
+        } catch (err) {
+          console.log(err);
+          return { message: "failed to save the book" };
+        }
       }
     },
   },

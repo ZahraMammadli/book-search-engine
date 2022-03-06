@@ -5,8 +5,16 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    me: () => {
-      return "Hello World";
+    me: async (parent, args, context) => {
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id }).select(
+          "-__v -password"
+        );
+
+        return userData;
+      }
+
+      return { message: "Can't find this user" };
     },
   },
   Mutation: {
@@ -43,9 +51,19 @@ const resolvers = {
       return { user, token };
     },
 
-    saveBook: async (parent, args) => {
-      console.log(args);
-      return { message: "in progress" };
+    saveBook: async (parent, args, context) => {
+      console.log(context.user);
+      try {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { savedBooks: { ...args.book } } },
+          { new: true, runValidators: true }
+        );
+        return updatedUser;
+      } catch (err) {
+        console.log(err);
+        return { message: "failed to save the book" };
+      }
     },
   },
 };
